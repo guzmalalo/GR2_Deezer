@@ -57,42 +57,56 @@ void addFirst(Song ** playlist, char* title, char * artist, unsigned int duratio
 
     if(*playlist == NULL){
         *playlist = newSong;
+        newSong->next = newSong;
+        newSong->prev = newSong;
     }else {
-        // link the song at the beginning
+
         newSong->next = *playlist;
-        (*playlist)->prev = newSong;
+        newSong->prev = (*playlist)->prev;
+        // (*playlist->prev = newSong;
+        newSong->next->prev = newSong;
+        newSong->prev->next = newSong;
+
         *playlist = newSong;
     }
 }
 
 void deletePlaylist(Song ** playlist){
-    Song * temp= NULL;
 
-    while(*playlist!=NULL){
-        temp= (*playlist)->next;
+    if(*playlist !=NULL) {
+        Song *toDelete = NULL;
+        Song *current = (*playlist)->next;
+
+        while(current!= *playlist){
+            toDelete = current;
+            current= current->next;
+            free(toDelete);
+        }
+
+        // on efface la tete
         free(*playlist);
-        *playlist= temp;
+        *playlist = NULL;
     }
+
 }
 
 // Add at the end
 void addLast(Song ** playlist, char* title, char * artist, unsigned int duration){
     // create a new song
     Song * newSong  = createSong(title, artist, duration);
-    Song * lastSong=  *playlist;
 
-    if (*playlist ==NULL){
+    if(*playlist == NULL){
         *playlist = newSong;
+        newSong->next = newSong;
+        newSong->prev = newSong;
     }else {
-        // parcourir la chaine
-        while (lastSong->next != NULL) {
-            lastSong = lastSong->next;
-        }
 
-        // ca y est on a trouvé le derniere
-        lastSong->next = newSong;
-        newSong->prev = lastSong;
-        lastSong = lastSong->next;
+        newSong->next = *playlist;
+        newSong->prev = (*playlist)->prev;
+        // (*playlist->prev = newSong;
+        newSong->next->prev = newSong;
+        newSong->prev->next = newSong;
+
     }
 
 }
