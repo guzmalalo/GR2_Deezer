@@ -7,11 +7,22 @@ int main() {
 
     Song * likedSongs= NULL;
 
-    addLast(&likedSongs,"Waka waka", "Shakira", 3);
-    addFirst(&likedSongs,"Back in black","ACDC", 2);
-    addFirst(&likedSongs,"Crusify your mind","Rodriguez", 2);
-    addLast(&likedSongs,"Ce matin là", "AIR", 3);
+    addLast(&likedSongs,"Waka waka", "Shakira", 1);
+    addFirst(&likedSongs,"Back in black","ACDC", 1);
+    addLast(&likedSongs,"Babe ...", "Britney",1);
+    addFirst(&likedSongs,"Crusify your mind","Rodriguez", 1);
+    addLast(&likedSongs,"Ce matin là", "AIR", 1);
+    addFirst(&likedSongs,"Toxic", "Britney",1);
+    addLast(&likedSongs,"Oops I did ..", "Britney",1);
 
+    // premier affchage
+    nowPlaying(likedSongs);
+
+    // efface toutes les chansons de britney
+    deleteByArtist(&likedSongs,"Britney");
+    deleteByArtist(&likedSongs,"Shakira");
+
+    // deuxième lecture
     nowPlaying(likedSongs);
 
     deletePlaylist(&likedSongs);

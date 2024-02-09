@@ -8,7 +8,7 @@
 void nowPlaying(Song * playlist){
     while(playlist!=NULL) {
         // playing
-        printf("Now playing \n");
+        printf(" \n Now playing \n");
         printf("%s \n", playlist->title);
         printf("%s \n", playlist->artist);
         sleep(playlist->duration);
@@ -16,6 +16,9 @@ void nowPlaying(Song * playlist){
         // update to the next song
         playlist= playlist->next;
     }
+
+    printf(" Fin de la playlist \n ");
+    printf("========================");
 
 }
 
@@ -74,4 +77,37 @@ void addLast(Song ** playlist, char* title, char * artist, unsigned int duration
     }
 
 }
+
+void deleteByArtist(Song ** playlist, char * artistName){
+    // si la liste est vide on retourne au main
+    if (*playlist == NULL){
+        printf("Your playlist is empty");
+        return;
+    }
+
+    // si non, on sait qu'il y a un moins une chanson
+    Song * prev = *playlist;
+    Song * current = (*playlist)->next;
+
+    // on cherche à partir du deuxième maillon
+    while (current!=NULL){
+        if(strcmp(current->artist,artistName) == 0){
+            prev->next = current->next;
+            free(current);
+            current = prev->next;
+        }else{
+            prev = current;
+            current= current->next;
+        }
+    }
+
+    //et si le premier est l'artiste qu'on cherche ?
+    if(strcmp((*playlist)->artist,artistName) == 0){
+        current = *playlist;
+        *playlist= (*playlist)->next;
+        free(current);
+    }
+
+}
+
 

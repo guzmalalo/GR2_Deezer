@@ -4,6 +4,7 @@
 #define MAXTITLE 50
 #define MAXARTIST 30
 
+// maillon elementaire / node / cellule
 struct song{
     // data
     char title[MAXTITLE];
@@ -12,6 +13,7 @@ struct song{
 
     // lien, link
     struct song * next;
+
 };
 
 typedef struct song Song;
@@ -28,8 +30,10 @@ void addFirst(Song ** playlist, char* title, char * artist, unsigned int duratio
 // Add at the end
 void addLast(Song ** playlist, char* title, char * artist, unsigned int duration);
 
-
 // free playlist
 void deletePlaylist(Song ** playlist);
+
+// delete by artist name
+void deleteByArtist(Song ** playlist, char * artistName);
 
 #endif
