@@ -6,15 +6,28 @@
 
 
 void nowPlaying(Song * playlist){
+    int choix =0;
     while(playlist!=NULL) {
         // playing
-        printf(" \n Now playing \n");
+        printf("\nNow playing \n");
         printf("%s \n", playlist->title);
         printf("%s \n", playlist->artist);
-        sleep(playlist->duration);
+        //sleep(playlist->duration);
+        printf("1: next, 2: previous 3: exit \n");
+        scanf("%d", &choix);
+        switch (choix) {
+            case 1:
+                playlist = playlist->next;
+                break;
+            case 2:
+                playlist = playlist->prev;
+                break;
+            case 3:
+                return;
+            default:
+                break;
+        }
 
-        // update to the next song
-        playlist= playlist->next;
     }
 
     printf(" Fin de la playlist \n ");
@@ -26,12 +39,14 @@ Song * createSong(char* title, char * artist, unsigned int duration){
     // Allocation
     Song * newSong = (Song *) malloc(sizeof(Song));
 
-    // Initialisation
+    // Initialisation data
     newSong->duration = duration;
     strcpy(newSong->artist, artist);
     strcpy(newSong->title, title);
 
+    // initialisation des liens
     newSong->next = NULL;
+    newSong->prev = NULL;
 
     return newSong;
 }
@@ -40,10 +55,14 @@ void addFirst(Song ** playlist, char* title, char * artist, unsigned int duratio
     // create a new song
     Song * newSong  = createSong(title, artist, duration);
 
-    // link the song at the beginning
-    newSong->next =  *playlist;
-    *playlist= newSong;
-
+    if(*playlist == NULL){
+        *playlist = newSong;
+    }else {
+        // link the song at the beginning
+        newSong->next = *playlist;
+        (*playlist)->prev = newSong;
+        *playlist = newSong;
+    }
 }
 
 void deletePlaylist(Song ** playlist){
@@ -53,9 +72,7 @@ void deletePlaylist(Song ** playlist){
         temp= (*playlist)->next;
         free(*playlist);
         *playlist= temp;
-
     }
-
 }
 
 // Add at the end
@@ -74,6 +91,8 @@ void addLast(Song ** playlist, char* title, char * artist, unsigned int duration
 
         // ca y est on a trouvé le derniere
         lastSong->next = newSong;
+        newSong->prev = lastSong;
+        lastSong = lastSong->next;
     }
 
 }

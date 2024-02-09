@@ -13,7 +13,7 @@ struct song{
 
     // lien, link
     struct song * next;
-
+    struct song * prev;
 };
 
 typedef struct song Song;
