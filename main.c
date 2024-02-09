@@ -8,6 +8,7 @@ int main() {
     Song * likedSongs= NULL;
 
     addFirst(&likedSongs,"Back in black","ACDC", 1);
+    addFirst(&likedSongs,"Back to hell","ACDC", 1);
     addLast(&likedSongs,"Waka waka", "Shakira", 1);
     addLast(&likedSongs,"Babe ...", "Britney",1);
     addFirst(&likedSongs,"Crusify your mind","Rodriguez", 1);
